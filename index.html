@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taiba's Birthday Wonderland 💗</title>
+<style>
+:root {
+  --site-primary: #e95f91;
+  --site-secondary: #f9c6d8;
+  --site-background: #fff1f6;
+  --site-on-primary: #ffffff;
+  --site-on-secondary: #57223a;
+  --site-on-background: #492437;
+  --site-font-body: ui-rounded, "Trebuchet MS", system-ui, sans-serif;
+  --site-font-heading: Georgia, "Times New Roman", serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--site-font-body); color: var(--site-on-background); background: light-dark(#fff1f6, #24151d); }
+#app { min-height: 100vh; width: 100%; border-radius: 0; overflow: hidden; position: relative; background-color: var(--site-background); color: var(--site-on-background); display: grid; place-items: center; padding: calc(28px * var(--site-spacing-scale)); isolation: isolate; }
+.glow { position:absolute; inset:0; opacity:var(--site-decoration-opacity); pointer-events:none; background: radial-gradient(circle at 15% 18%, #ffd7e6 0, transparent 28%), radial-gradient(circle at 85% 78%, #ffe2b9 0, transparent 26%); z-index:-1; }
+.card { width: min(100%, 720px); text-align:center; padding: calc(34px * var(--site-spacing-scale)); border: 1px solid #f4b6ce; border-radius: calc(32px * var(--site-radius-scale)); background: light-dark(#fffafd, #35202c); box-shadow: 0 18px 55px #bd5c8420; position:relative; }
+.eyebrow { letter-spacing:.18em; text-transform:uppercase; font-size:.75rem; color:var(--site-primary); font-weight:800; }
+h1 { font-family:var(--site-font-heading); font-size:clamp(2.5rem, 8vw, calc(4.5rem * var(--site-heading-scale))); line-height:1.04; margin:18px 0 14px; font-weight:500; }
+.name { color:var(--site-primary); font-style:italic; }
+.subtitle { font-size:1.08rem; line-height:1.7; max-width:500px; margin:0 auto 24px; opacity:.86; }
+.cake { font-size: clamp(4rem, 12vw, 6.5rem); margin: 14px 0 22px; display:inline-block; filter: drop-shadow(0 8px 10px #e95f9120); animation:bob 2.8s ease-in-out infinite; }
+button { font:inherit; border:0; cursor:pointer; border-radius:999px; padding:14px 23px; font-weight:800; transition:transform .2s, filter .2s; }
+button:hover { transform:translateY(-2px); filter:brightness(1.04); }
+.primary { background:var(--site-primary); color:var(--site-on-primary); box-shadow:0 8px 22px #e95f9138; }
+.secondary { background:var(--site-secondary); color:var(--site-on-secondary); }
+.message { display:none; margin:26px auto 0; padding:22px; max-width:540px; border-radius:22px; background:light-dark(#fff0f6, #48283a); border:1px dashed #e995b4; line-height:1.8; animation:appear .7s ease both; }
+.message.show { display:block; }
+.message h2 { font-family:var(--site-font-heading); font-size:1.8rem; margin:0 0 10px; font-weight:500; }
+.actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:18px; }
+.footer { font-size:.8rem; margin-top:26px; opacity:.62; }
+.confetti { position:absolute; top:-20px; width:9px; height:14px; border-radius:3px; pointer-events:none; animation:fall linear forwards; z-index:3; }
+.heart { position:absolute; pointer-events:none; animation:floatUp 4.5s ease-in forwards; opacity:var(--site-decoration-opacity); z-index:0; }
+.journey { width:min(100%,760px); position:relative; z-index:1; }
+.progress-wrap { width:min(100%,360px); margin:0 auto 22px; }
+.progress-label { display:flex; justify-content:space-between; font-size:.78rem; margin-bottom:7px; opacity:.75; }
+.progress { height:7px; border-radius:99px; background:#f6d8e4; overflow:hidden; }
+.progress span { display:block; height:100%; width:0; background:linear-gradient(90deg,#e95f91,#f6b84b); transition:width .5s ease; }
+.page { display:none; animation:appear .65s ease both; }
+.page.active { display:block; }
+.page-icon { font-size:clamp(3.3rem,10vw,5.5rem); margin:10px 0 18px; animation:bob 2.8s ease-in-out infinite; }
+.memory { padding:16px; border-radius:20px; background:light-dark(#fff0f6,#48283a); border:1px solid #f4b6ce; margin:18px auto; max-width:540px; line-height:1.8; }
+.nav { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin-top:24px; }
+.surprise-count { display:inline-block; border-radius:99px; padding:7px 13px; background:var(--site-secondary); color:var(--site-on-secondary); font-size:.8rem; font-weight:800; margin-bottom:12px; }
+.gift { font-size:3.5rem; border:0; background:transparent; padding:10px; cursor:pointer; animation:bob 2s ease-in-out infinite; }
+.gift-row { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+.reveal { display:none; }
+.reveal.show { display:block; animation:appear .5s ease both; }
+.type-line { min-height:3.2em; }
+@keyframes bob { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-10px) rotate(2deg)} }
+@keyframes appear { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fall { to{transform:translateY(110vh) rotate(720deg);opacity:.2} }
+@keyframes floatUp { from{transform:translateY(0) scale(.8);opacity:0} 15%{opacity:.9} to{transform:translateY(-90vh) scale(1.4);opacity:0} }
+@media(max-width:480px){ .card{padding:28px 19px;} .subtitle{font-size:1rem;} }
+@media(prefers-reduced-motion:reduce){ *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;} }
+</style>
+</head>
+<body>
+<main id="app" data-sites-preview-theme="custom">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="journey">
+  <section class="card">
+    <div class="progress-wrap"><div class="progress-label"><span id="chapterLabel">CHAPTER 1 OF 8</span><span id="clockLabel">Your surprise begins ✨</span></div><div class="progress"><span id="progressBar"></span></div></div>
+    <section class="page active" data-page="0">
+    <div class="eyebrow">a little surprise, just for you</div>
+    <h1>Happy Birthday,<br><span class="name" id="friendName">Taiba</span>! ✨</h1>
+    <p class="subtitle">To my beautiful best friend — I made you a tiny birthday universe, with little surprises waiting at every turn. 💗</p>
+    <div class="cake" aria-label="birthday cake">🎂</div>
+    <p class="subtitle">Ready, Taiba? Keep tapping “Next” — a new surprise is waiting every few seconds! 🎁</p>
+    <button class="primary" id="startBtn">Start our little adventure 💌</button>
+    </section>
+    <section class="page" data-page="1"><span class="surprise-count">SURPRISE 01 · A WISH</span><div class="page-icon">🌷</div><h1>For you, <span class="name">Taiba</span></h1><p class="subtitle type-line" id="typedWish">May this year bring you the kind of happiness that stays, dreams that come true, and a thousand reasons to smile.</p><p class="memory">You deserve soft days, loud laughter, loyal people, beautiful memories, and every little thing your heart has been hoping for. 💕</p><button class="primary nextBtn">Next surprise ✨</button></section>
+    <section class="page" data-page="2"><span class="surprise-count">SURPRISE 02 · BESTIE AWARD</span><div class="page-icon">🏆</div><h1>Officially the <span class="name">Best Bestie</span></h1><p class="subtitle">After a very serious investigation, the birthday committee has reached its final decision…</p><div class="memory"><h2>🏅 Taiba</h2>Chief Smile Creator · Professional Mood Lifter · One-of-a-kind Human · Forever Bestie 💗</div><button class="primary nextBtn">Accept your award 😌</button></section>
+    <section class="page" data-page="3"><span class="surprise-count">SURPRISE 03 · PICK A GIFT</span><div class="page-icon">🎁</div><h1>Choose your <span class="name">mystery box</span></h1><p class="subtitle">No peeking! Tap any gift to reveal your tiny birthday fortune.</p><div class="gift-row"><button class="gift" data-gift="0" aria-label="Gift one">🎁</button><button class="gift" data-gift="1" aria-label="Gift two">🎀</button><button class="gift" data-gift="2" aria-label="Gift three">💝</button></div><div class="memory reveal" id="giftReveal" aria-live="polite"></div><button class="primary nextBtn">What's next? 💫</button></section>
+    <section class="page" data-page="4"><span class="surprise-count">SURPRISE 04 · LITTLE REMINDER</span><div class="page-icon">🫶</div><h1>Best friends are <span class="name">a blessing</span></h1><p class="subtitle">A little reminder for the days when you forget just how special you are.</p><div class="memory">Taiba, never dim your light to make the world comfortable. Keep being kind, keep dreaming big, and remember you have a bestie cheering for you. 🌙✨</div><button class="primary nextBtn">One more, please 💗</button></section>
+    <section class="page" data-page="5"><span class="surprise-count">SURPRISE 05 · MAKE A WISH</span><div class="page-icon" id="candle">🕯️</div><h1>Close your eyes & <span class="name">make a wish</span></h1><p class="subtitle">Take a tiny birthday moment just for yourself. Think of something your heart really wants…</p><button class="primary" id="wishBtn">Blow the candle 🌬️</button><div class="memory reveal" id="wishReveal">✨ Wish sent to the universe! May something wonderful find its way to you, Taiba. ✨</div><div style="margin-top:18px"><button class="secondary nextBtn">My wish is made 💫</button></div></section>
+    <section class="page" data-page="6"><span class="surprise-count">SURPRISE 06 · OUR FRIENDSHIP</span><div class="page-icon">💌</div><h1>A note from your <span class="name">bestie</span></h1><div class="memory"><p>Dear Taiba,</p><p>Happy Birthday to one of my favourite people in this whole world! 🥹💗 I hope life gives you back all the love and happiness you give to others. May your new year be full of unexpected blessings, unforgettable adventures, and moments that make you say, “This is exactly what I needed.”</p><p>Thank you for being YOU. Keep smiling, birthday girl. You are loved more than words can fit on one little screen. 🌸</p><p>Forever cheering for you,<br>Your bestie 💕</p></div><button class="primary nextBtn">Final surprise 🎊</button></section>
+    <section class="page" data-page="7"><span class="surprise-count">FINAL SURPRISE · JUST FOR TAIBA</span><div class="page-icon">🥹💗</div><h1>Taiba, do you <span class="name">love me?</span></h1><p class="subtitle">One tiny question for my favourite bestie… 🫶💕</p><div class="actions" id="loveChoices"><button class="primary" id="loveYes">YES, of course! 💖🥰</button><button class="secondary" id="loveNo">No 😭💔</button></div><div class="memory reveal" id="loveResponse" aria-live="polite"></div><div class="actions"><button class="secondary" id="musicBtn" aria-pressed="false">Play birthday tune ♫</button><button class="secondary" id="replayBtn">Replay the journey ↻</button></div></section>
+    <div class="footer">A little website, a lot of love · Made for Taiba ♡</div>
+  </section>
+  </div>
+</main>
+<script>
+const app = document.getElementById('app');
+let audioCtx = null, playing = false;
+function confettiBurst(count=90) {
+  const colors = ['#e95f91','#f6b84b','#a78bfa','#7dd3c7','#ff8b75','#f9c6d8'];
+  for (let i=0;i<count;i++) {
+    const bit = document.createElement('i'); bit.className='confetti';
+    bit.style.left = Math.random()*100+'%'; bit.style.background = colors[Math.floor(Math.random()*colors.length)];
+    bit.style.animationDuration = (2.6+Math.random()*3.2)+'s'; bit.style.animationDelay = (Math.random()*.8)+'s';
+    bit.style.transform = `rotate(${Math.random()*360}deg)`; document.body.appendChild(bit);
+    setTimeout(()=>bit.remove(),7000);
+  }
+}
+function heartsBurst() {
+  for(let i=0;i<12;i++) { const h=document.createElement('span'); h.className='heart'; h.textContent=['💗','💕','✨','🌸'][Math.floor(Math.random()*4)]; h.style.left=(5+Math.random()*90)+'%'; h.style.bottom='-25px'; h.style.fontSize=(16+Math.random()*20)+'px'; h.style.animationDelay=(Math.random()*1.4)+'s'; app.appendChild(h); setTimeout(()=>h.remove(),5500); }
+}
+let currentPage=0, journeyTimer=null, journeyStarted=false;
+const pages=[...document.querySelectorAll('.page')];
+function showPage(n){currentPage=Math.max(0,Math.min(pages.length-1,n));pages.forEach((p,i)=>p.classList.toggle('active',i===currentPage));document.getElementById('chapterLabel').textContent=`CHAPTER ${currentPage+1} OF ${pages.length}`;document.getElementById('progressBar').style.width=((currentPage+1)/pages.length*100)+'%';document.getElementById('clockLabel').textContent=currentPage===pages.length-1?'All surprises unlocked 💖':`Surprise ${currentPage+1} is yours ✨`;if(currentPage===1){typeWish();}if(currentPage===3){document.getElementById('giftReveal').classList.remove('show');}if(currentPage===5){document.getElementById('wishReveal').classList.remove('show');document.getElementById('candle').textContent='🕯️';}if(currentPage===pages.length-1){confettiBurst(130);heartsBurst();} }
+function typeWish(){const el=document.getElementById('typedWish');const full='May this year bring you the kind of happiness that stays, dreams that come true, and a thousand reasons to smile.';el.textContent='';let i=0;const tick=()=>{if(currentPage!==1)return;if(i<full.length){el.textContent+=full[i++];setTimeout(tick,24);}};tick();}
+function startJourney(){journeyStarted=true;showPage(1);confettiBurst(80);heartsBurst();clearInterval(journeyTimer);journeyTimer=setInterval(()=>{if(journeyStarted&&currentPage<pages.length-1)showPage(currentPage+1);else clearInterval(journeyTimer);},15000);}
+document.getElementById('startBtn').addEventListener('click',startJourney);
+document.querySelectorAll('.nextBtn').forEach(btn=>btn.addEventListener('click',()=>{showPage(currentPage+1);confettiBurst(35);heartsBurst();}));
+document.querySelectorAll('[data-gift]').forEach(btn=>btn.addEventListener('click',()=>{const fortunes=['A year full of unexpected good news is headed your way! 🌟','Your next chapter will bring beautiful people and even prettier memories. 🌸','A big hug, extra cake, and a little everyday magic are coming your way. 💝'];document.getElementById('giftReveal').textContent=fortunes[Number(btn.dataset.gift)];document.getElementById('giftReveal').classList.add('show');confettiBurst(45);}));
+document.getElementById('wishBtn').addEventListener('click',()=>{document.getElementById('candle').textContent='💨✨';document.getElementById('wishReveal').classList.add('show');confettiBurst(55);heartsBurst();});
+document.getElementById('loveYes').addEventListener('click',()=>{const response=document.getElementById('loveResponse');response.innerHTML='<h2>YAYYYY! 🥹💖🎉</h2>Bestie love confirmed!! 💞 Happy Birthday magic + unlimited hugs + endless friendship unlocked! I love you too, Taiba! 🫂💗🥳🌷';response.classList.add('show');document.getElementById('loveChoices').style.display='none';confettiBurst(220);heartsBurst();setTimeout(()=>{if(document.visibilityState==='visible')confettiBurst(100);},1200);});
+document.getElementById('loveNo').addEventListener('click',()=>{const response=document.getElementById('loveResponse');response.innerHTML='<h2>Nooo, Taiba! 🥺😭💔</h2>Please choose YES — this is the incorrect option! 🥹👉👈💗 Try again, bestie? 🫶💕';response.classList.add('show');confettiBurst(12);});
+document.getElementById('replayBtn').addEventListener('click',()=>{clearInterval(journeyTimer);journeyStarted=false;showPage(0);confettiBurst(30);});
+// Tiny, original melody using the browser's audio engine; no external files needed.
+document.getElementById('musicBtn').addEventListener('click', async()=>{
+  const btn=document.getElementById('musicBtn');
+  if(playing){ if(audioCtx) await audioCtx.close(); audioCtx=null; playing=false; btn.textContent='Play birthday tune ♫'; btn.setAttribute('aria-pressed','false'); return; }
+  const AC=window.AudioContext||window.webkitAudioContext; if(!AC){btn.textContent='Audio not supported';return;}
+  audioCtx=new AC(); playing=true; btn.textContent='Stop tune ♪'; btn.setAttribute('aria-pressed','true');
+  const notes=[523.25,523.25,587.33,523.25,698.46,659.25,523.25,523.25,587.33,523.25,783.99,698.46];
+  notes.forEach((freq,i)=>{const osc=audioCtx.createOscillator(), gain=audioCtx.createGain(); osc.type='sine';osc.frequency.value=freq;gain.gain.setValueAtTime(.0001,audioCtx.currentTime+i*.28);gain.gain.exponentialRampToValueAtTime(.12,audioCtx.currentTime+i*.28+.03);gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+i*.28+.23);osc.connect(gain);gain.connect(audioCtx.destination);osc.start(audioCtx.currentTime+i*.28);osc.stop(audioCtx.currentTime+i*.28+.25);});
+  setTimeout(async()=>{if(playing){await audioCtx.close();audioCtx=null;playing=false;btn.textContent='Play birthday tune ♫';btn.setAttribute('aria-pressed','false');}},notes.length*280+500);
+});
+// Ambient hearts, automatic chapter changes, and user-controlled Next buttons.
+setInterval(()=>{if(document.visibilityState==='visible') heartsBurst();},6500);
+</script>
+</body>
+</html>
